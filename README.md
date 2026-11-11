@@ -16,7 +16,7 @@ Set the local training credential and signing secret in the terminal that will r
 
 ```zsh
 export NETPULSE_USERNAME=trainer
-read -rs 'NETPULSE_PASSWORD?Training password: '
+read -r -s -p 'NETPULSE_PASSWORD?Training password: '
 printf '\n'
 export NETPULSE_PASSWORD
 export NETPULSE_JWT_SECRET="$(python -c 'import secrets; print(secrets.token_urlsafe(32))')"
