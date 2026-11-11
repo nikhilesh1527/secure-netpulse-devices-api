@@ -1,0 +1,234 @@
+{
+  "info": {
+    "_postman_id": "04912782-c2da-49bb-a561-f39d91344fd5",
+    "name": "NetPulse Devices API Collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "59425912",
+    "_collection_link": "https://go.postman.co/collection/59425912-04912782-c2da-49bb-a561-f39d91344fd5?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (pm.response.code === 200) {  const data = pm.response.json();  pm.environment.set(\"token\", data.access_token);}"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "username",
+              "value": "{{training_username}}"
+            },
+            {
+              "key": "password",
+              "value": "{{training_password}}"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{base_url}}/auth/token",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "auth",
+            "token"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create device",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\": \"Postman Edge Router\",\n    \"device_type\": \"router\",\n    \"status\": \"online\",\n    \"location\": \"Delhi\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/devices",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "devices"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Device with Id",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/devices/{{device_id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "devices",
+            "{{device_id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Replace device",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Updated Edge Router\",\n  \"device_type\": \"router\",\n  \"status\": \"maintenance\",\n  \"location\": \"Mumbai\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/devices/{{device_id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "devices",
+            "{{device_id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update device status",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"status\": \"online\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/devices/{{device_id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "devices",
+            "{{device_id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Fetch all devices",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Updated Edge Router\",\n  \"device_type\": \"router\",\n  \"status\": \"maintenance\",\n  \"location\": \"Mumbai\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/devices",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "devices"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "{{base_url}}/devices/{{device_id}}",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/devices/{{device_id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "devices",
+            "{{device_id}}"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  }
+}
