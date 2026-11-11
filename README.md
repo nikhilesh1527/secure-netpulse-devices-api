@@ -17,6 +17,7 @@ Set the local training credential and signing secret in the terminal that will r
 ```zsh
 export NETPULSE_USERNAME=trainer
 read -r -s -p 'NETPULSE_PASSWORD?Training password: '
+read -r -s -p 'NETPULSE_PASSWORD?Training password: '
 printf '\n'
 export NETPULSE_PASSWORD
 export NETPULSE_JWT_SECRET="$(python -c 'import secrets; print(secrets.token_urlsafe(32))')"
@@ -53,3 +54,19 @@ The API starts with two devices. Data is stored in memory and resets when the ap
 ## Security scope
 
 The training password is hashed when the application starts. Credentials and the JWT signing secret come from environment variables. Bearer tokens require HTTPS outside this local lab. Authentication does not provide per-user authorization rules.
+
+
+## Security review
+
+- [ ] The training username, password, and JWT signing secret come from environment variables.
+- [ ] No real password, signing secret, or bearer token appears in source code.
+- [ ] The training password is hashed before it is kept in application memory.
+- [ ] Login issues a JWT only for valid credentials, with `subject` and `expiration` claims.
+- [ ] Token validation checks the signature, expiry, and configured training user.
+- [ ] GET endpoints are public; POST, PUT, PATCH, and DELETE require a bearer token.
+- [ ] Missing and invalid tokens, and invalid login credentials, return 401.
+- [ ] Bearer tokens would require HTTPS outside this local lab.
+- [ ] Authentication does not yet provide per-device authorization.
+
+
+
