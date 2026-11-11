@@ -29,7 +29,7 @@ checks = [
     ("Configured user", signed_token(TRAINING_USERNAME, future, JWT_SECRET), "accepted"),
     ("Unrelated user", signed_token(TRAINING_USERNAME + "-other", future, JWT_SECRET), "401"),
     ("Expired token", signed_token(TRAINING_USERNAME, past, JWT_SECRET), "401"),
-    ("Wrong signature", signed_token(TRAINING_USERNAME, future, "different-secret"), "401"),
+    ("Wrong signature", signed_token(TRAINING_USERNAME, future, "different-secret-with-at-least-32-bytes"), "401"),
 ]
 
 failures = 0
